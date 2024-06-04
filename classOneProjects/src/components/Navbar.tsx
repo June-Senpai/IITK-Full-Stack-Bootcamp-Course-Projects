@@ -6,6 +6,7 @@ const navLinks = [
   { name: "Calculator", to: "/calculator" },
   { name: "Weather", to: "/weather" },
   { name: "Todo", to: "/todo" },
+  { name: "HTML", to: "/html" },
 ]
 
 const Navbar = () => {

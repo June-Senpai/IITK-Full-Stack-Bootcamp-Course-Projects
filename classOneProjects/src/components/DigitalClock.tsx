@@ -1,4 +1,19 @@
 import { useState } from "react"
+
+const numbers = [
+  { number: "1", rotate: "80" },
+  { number: "2", rotate: "60" },
+  { number: "3", rotate: "90" },
+  { number: "4", rotate: "120" },
+  { number: "5", rotate: "150" },
+  { number: "6", rotate: "180" },
+  { number: "7", rotate: "210" },
+  { number: "8", rotate: "240" },
+  { number: "9", rotate: "270" },
+  { number: "10", rotate: "300" },
+  { number: "11", rotate: "330" },
+  { number: "12", rotate: "0" },
+]
 const DigitalClock = () => {
   // const date = new Date()
   // console.log(date.toString())
@@ -24,9 +39,19 @@ const DigitalClock = () => {
           className={`absolute h-[40%] -translate-x-1/2 rotate-0 w-2 bg-red-500 left-1/2 top-1/2 `}></div>
         <div
           className={`absolute h-[40%] -translate-x-1/2 rotate-0 w-2 bg-red-500 left-1/2 top-1/2 `}></div>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
+        {numbers.map(({ number, rotate }) => {
+          return (
+            <div
+              key={number}
+              className={`absolute w-full h-full rotate-[${rotate}deg] text-center `}>
+              {/* <span className={`rotate-${rotate}`}>{number}</span> */}
+              {number}
+            </div>
+          )
+        })}
+        <div className="absolute h-full w-full rotate-[36deg] text-center">1</div>
+        <div className="absolute h-full w-full rotate-90 text-center">2</div>
+        {/* <div className="absolute h-full w-full rotate-[120deg] text-center">3</div>
         <div>4</div>
         <div>5</div>
         <div>6</div>
@@ -35,7 +60,7 @@ const DigitalClock = () => {
         <div>9</div>
         <div>10</div>
         <div>11</div>
-        <div>12</div>
+        <div>12</div> */}
       </section>
     </div>
   )
