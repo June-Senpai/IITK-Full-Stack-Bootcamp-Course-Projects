@@ -1,17 +1,29 @@
 import { useReducer, useState } from "react"
 
+interface Todo {
+  id: number
+  name: string
+  completed: boolean
+  editing: boolean
+}
+
+type Action =
+  | { type: "add-todo"; payload: string }
+  | { type: "delete-todo"; payload: number }
+  | { type: "edit-todo"; payload: { index: number; newName: string } }
+  | { type: "toggle-todo"; payload: { id: number } }
+  | { type: "set-editing"; payload: { index: number; editing: boolean } }
+
 const ACTIONS = {
   ADD_TODO: "add-todo",
   DELETE_TODO: "delete-todo",
   EDIT_TODO: "edit-todo",
   TOGGLE_TODO: "toggle-todo",
   SET_EDITING: "set-editing",
-}
+} as const
 
-const reducer = (todoList, action) => {
+const reducer = (todoList: Todo[], action: Action): Todo[] => {
   switch (action.type) {
-    // case ACTIONS.ADD_TODO:
-    //   return [...todoList, action.payload]
     case ACTIONS.ADD_TODO:
       return [...todoList, todoValues(action.payload)]
     case ACTIONS.DELETE_TODO:
@@ -19,7 +31,7 @@ const reducer = (todoList, action) => {
     case ACTIONS.TOGGLE_TODO:
       return todoList.map((todo) => {
         if (todo.id === action.payload.id) {
-          return { ...todo, complete: !todo.complete }
+          return { ...todo, completed: !todo.completed }
         }
         return todo
       })
@@ -38,7 +50,7 @@ const reducer = (todoList, action) => {
   }
 }
 
-const todoValues = (name) => {
+const todoValues = (name: string): Todo => {
   return {
     id: Date.now(),
     name,
@@ -48,22 +60,21 @@ const todoValues = (name) => {
 }
 
 const Todo = () => {
-  const [todoList, dispatch] = useReducer(reducer, [])
+  const [todoList, dispatch] = useReducer(reducer, [] as Todo[])
   const [newTodo, setNewTodo] = useState("")
 
-  const handleSubmit = (
-    e: React.BaseSyntheticEvent<Event, EventTarget & HTMLFormElement, EventTarget>
-  ) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch({ type: ACTIONS.ADD_TODO, payload: newTodo })
     setNewTodo("")
   }
 
-  const handleEditSubmit = (e, index) => {
+  const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>, index: number) => {
     e.preventDefault()
-    const newName = e.target.elements.editInput.value
+    const newName = (e.currentTarget.elements.namedItem("editInput") as HTMLInputElement).value
     dispatch({ type: ACTIONS.EDIT_TODO, payload: { index, newName } })
   }
+
   return (
     <main className="flex flex-col items-center gap-4 text-2xl">
       <h1>Todo</h1>
@@ -79,11 +90,11 @@ const Todo = () => {
         <button type="submit">Add</button>
       </form>
       {todoList.map((todo, todoIndex) => (
-        <div key={todoIndex} className="text-2xl flex items-center justify-center gap-4">
+        <div key={todo.id} className="text-2xl flex items-center justify-center gap-4">
           <input
             type="checkbox"
             onClick={() => dispatch({ type: ACTIONS.TOGGLE_TODO, payload: { id: todo.id } })}
-            checked={todo.complete}
+            checked={todo.completed}
             readOnly
             className="h-4 w-4"
           />
@@ -104,7 +115,7 @@ const Todo = () => {
             </form>
           ) : (
             <>
-              {todo.complete ? (
+              {todo.completed ? (
                 <p>
                   <s>{todo.name}</s>
                 </p>
@@ -130,4 +141,5 @@ const Todo = () => {
     </main>
   )
 }
+
 export default Todo
