@@ -9,6 +9,8 @@ import SocialMediaForm from "./components/html/SocialMediaForm"
 import Table from "./components/html/Table"
 import NavbarForm from "./components/layout/NavbarForm"
 import Calculator from "./components/Calculator"
+import Todo from "./components/Todo"
+import "./App.css"
 
 export default function App() {
   return (
@@ -18,6 +20,7 @@ export default function App() {
         <Route path="/" element={<Hello />} />
         <Route path="/Clock" element={<DigitalClock />} />
         <Route path="/Calculator" element={<Calculator />} />
+        <Route path="/Todo" element={<Todo />} />
         <Route path="/html" element={<HtmlNavbar />}>
           <Route index element={<Navigate to="form/loginForm" />} />
           <Route path="form" element={<NavbarForm />}>

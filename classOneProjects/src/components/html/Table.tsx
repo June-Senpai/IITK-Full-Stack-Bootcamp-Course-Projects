@@ -1,7 +1,7 @@
 const Table = () => {
   return (
     <main className="flex items-center flex-col gap-4">
-      <h1 className="text-3xl font-bold ">Table</h1>
+      <h1>Table</h1>
       <table className="border-2 border-black">
         <thead>
           <tr className="border-b-2 border-black bg-blue-200">
