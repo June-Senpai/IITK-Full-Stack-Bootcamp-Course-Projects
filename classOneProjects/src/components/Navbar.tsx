@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom"
 
 const navLinks = [
   { name: "Home", to: "/" },
-  { name: "DigitalClock", to: "/digitalClock" },
+  { name: "Clock", to: "/Clock" },
   { name: "Calculator", to: "/calculator" },
   { name: "Weather", to: "/weather" },
   { name: "Todo", to: "/todo" },

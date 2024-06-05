@@ -35,7 +35,7 @@ const DigitalClock = () => {
 
   return (
     <div className="flex gap-8 items-center justify-center h-screen flex-col text-2xl">
-      <span className="text-2xl"> DigitalClock</span>
+      <span className="text-2xl"> Clock</span>
       <div className="text-4xl font-bold">{timeState}</div>
       <section className="w-96 h-96 border-2 border-black rounded-full relative">
         <div className="absolute left-1/2 top-1/2 bg-black h-2 z-50 w-2 rounded-full -translate-y-1/2"></div>
