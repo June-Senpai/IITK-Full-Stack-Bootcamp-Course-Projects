@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom"
 const htmlLinks = [
   { name: "form", to: "/html/form" },
   { name: "table", to: "/html/table" },
+  { name: "Small Tasks", to: "/html/smallTasks" },
   //   { name: "hi", to: "/html/loginForm/hi" },
 ]
 
