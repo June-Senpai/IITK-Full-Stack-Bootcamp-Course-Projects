@@ -100,7 +100,13 @@ const Todo = () => {
           />
           {todo.editing ? (
             <form onSubmit={(e) => handleEditSubmit(e, todoIndex)}>
-              <input type="text" name="editInput" defaultValue={todo.name} className="text-2xl" />
+              <input
+                type="text"
+                name="editInput"
+                defaultValue={todo.name}
+                autoFocus
+                className="text-2xl"
+              />
               <button type="submit">Save</button>
               <button
                 type="button"
