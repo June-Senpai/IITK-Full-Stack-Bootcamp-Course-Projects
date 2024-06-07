@@ -4,6 +4,7 @@ const htmlLinks = [
   { name: "login form", to: "/html/form/loginForm" },
   { name: "signup form", to: "/html/form/signUpForm" },
   { name: "social media form", to: "/html/form/socialMediaForm" },
+  { name: "Full Form", to: "/html/form/fullForm" },
   //   { name: "hi", to: "/html/loginForm/hi" },
 ]
 

@@ -12,6 +12,7 @@ import Calculator from "./components/Calculator"
 import Todo from "./components/Todo"
 import "./App.css"
 import SmallTasks from "./components/html/SmallTasks"
+import FullForm from "./components/html/FullForm"
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="loginForm" element={<LoginForm />} />
             <Route path="signUpForm" element={<SignUpForm />} />
             <Route path="socialMediaForm" element={<SocialMediaForm />} />
+            <Route path="fullForm" element={<FullForm />} />
           </Route>
           <Route path="smallTasks" element={<SmallTasks />} />
           <Route path="table" element={<Table />} />
