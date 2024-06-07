@@ -37,6 +37,24 @@ const SmallTasks = () => {
         `}
         </code>
       </pre>
+      <h2>Lists</h2>
+      <p>There are 3 types of lists</p>
+      <ul>
+        <li>Unordered</li>
+        <li>Unordered</li>
+        <li>Unordered</li>
+      </ul>
+      <ol>
+        <li>Ordered</li>
+        <li>Ordered</li>
+        <li>Ordered</li>
+      </ol>
+      <dl>
+        <dt>Definition</dt>
+        <dd>A definition list is a list of terms and their associated definitions.</dd>
+        <dt>Definition</dt>
+        <dd>A definition list is a list of terms and their associated definitions.</dd>
+      </dl>
     </main>
   )
 }
