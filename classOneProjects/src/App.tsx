@@ -13,6 +13,8 @@ import Todo from "./components/Todo"
 import "./App.css"
 import SmallTasks from "./components/html/SmallTasks"
 import FullForm from "./components/html/FullForm"
+import CssNavbar from "./components/layout/CssNavbar"
+import LunarEclipse from "./components/css/LunarEclipse"
 
 export default function App() {
   return (
@@ -34,6 +36,10 @@ export default function App() {
           </Route>
           <Route path="smallTasks" element={<SmallTasks />} />
           <Route path="table" element={<Table />} />
+        </Route>
+        <Route path="/css" element={<CssNavbar />}>
+          <Route index element={<Navigate to="lunarEslipse" />} />
+          <Route path="lunarEslipse" element={<LunarEclipse />} />
         </Route>
       </Routes>
     </main>
