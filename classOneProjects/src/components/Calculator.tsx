@@ -154,18 +154,30 @@ const Calculator = () => {
   >(reducer, initialState)
   console.log({ currentOperand, operation, previousOperand })
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center ">
       <h1>Calculator</h1>
-      <section className="bg-slate-300 ">
-        {operation ? (
-          <div className="w">
-            {formatOperand(previousOperand)} {operation}
-          </div>
-        ) : (
-          <br />
-        )}
-        {currentOperand ? <div className="w">{formatOperand(currentOperand)}</div> : <br />}
-        <button onClick={() => dispatch({ type: ACTIONS.CLEAR })}>Clear</button>
+      <div className="bg-slate-300 w-[245px] mt-2 text-2xl text-right rounded-t-lg p-2">
+        <div className="bg-green-300 rounded-lg p-2 w-full border-2 border-white">
+          {operation ? (
+            <div className="">
+              {formatOperand(previousOperand)} {operation}
+            </div>
+          ) : (
+            <br />
+          )}
+          {currentOperand ? <div className="w">{formatOperand(currentOperand)}</div> : <br />}
+        </div>
+      </div>
+      <section className="bg-slate-300 grid grid-cols-3 gap-2 p-4 rounded-b-lg">
+        <button onClick={() => dispatch({ type: ACTIONS.CLEAR })} className="hover:bg-green-200">
+          Clear
+        </button>
+        <button
+          onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}
+          className="hover:bg-red-300">
+          Delete
+        </button>
+        <DigitButton dispatch={dispatch} digit="." />
         <DigitButton dispatch={dispatch} digit="1" />
         <DigitButton dispatch={dispatch} digit="2" />
         <DigitButton dispatch={dispatch} digit="3" />
@@ -176,13 +188,15 @@ const Calculator = () => {
         <DigitButton dispatch={dispatch} digit="8" />
         <DigitButton dispatch={dispatch} digit="9" />
         <DigitButton dispatch={dispatch} digit="0" />
-        <DigitButton dispatch={dispatch} digit="." />
         <OperationButton dispatch={dispatch} operation="+" />
         <OperationButton dispatch={dispatch} operation="-" />
         <OperationButton dispatch={dispatch} operation="*" />
         <OperationButton dispatch={dispatch} operation="/" />
-        <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>Delete</button>
-        <button onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>=</button>
+        <button
+          onClick={() => dispatch({ type: ACTIONS.EVALUATE })}
+          className="bg-slate-400/50 p-2 rounded-lg hover:opacity-75">
+          =
+        </button>
       </section>
     </main>
   )
@@ -192,7 +206,7 @@ export default Calculator
 const DigitButton = ({ dispatch, digit }: { dispatch: React.Dispatch<Action>; digit: string }) => {
   return (
     <button
-      className="bg-slate-200 p-2 rounded-lg"
+      className="bg-slate-200 p-2 rounded-lg hover:opacity-75"
       onClick={() => dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit } })}>
       {digit}
     </button>
@@ -207,7 +221,9 @@ const OperationButton = ({
   operation: string
 }) => {
   return (
-    <button onClick={() => dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: { operation } })}>
+    <button
+      onClick={() => dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: { operation } })}
+      className=" bg-slate-400/50 p-2 rounded-lg hover:opacity-75">
       {operation}
     </button>
   )
