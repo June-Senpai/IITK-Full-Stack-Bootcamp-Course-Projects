@@ -79,6 +79,9 @@ const SmallTasks = () => {
         <area shape="rect" coords="34,44,270,350" alt="Computer" href="/css/lunarEclipse" />
       </map>
       so if u click way below u go to lunar Eclipse and if top then u go to new image
+      <h1 className="text-red-500">
+        DON'T USE IT, IT IS CACHING THE OLD LINK AND STUFF IT SEEMS UNSTABLE
+      </h1>
     </main>
   )
 }

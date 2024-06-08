@@ -1,53 +1,204 @@
 import { useReducer } from "react"
 
-// const ACTIONS = {
-//   ADD_DIGIT: "add_digit",
-//   SUBTRACT_DIGIT: "subtract_digit",
-//   CLEAR: "clear",
-//   DELETE_DIGIT: "delete_digit",
-//   EVALUATE:"evaluate",
-// }
-
-const ACTIONS = {
-  INCREMENT: "increment",
-  DECREMENT: "decrement",
-  RESET: "reset",
+type State = {
+  currentOperand: string | null
+  previousOperand: string | null
+  operation: string | null
+  overwrite?: boolean
 }
 
-function reducer(state, action) {
-  switch (action.type) {
-    case ACTIONS.INCREMENT:
-      return { count: state.count + 1 }
-    case ACTIONS.DECREMENT:
-      return { count: state.count - 1 }
-    case ACTIONS.RESET:
-      return { count: 0 }
-    default:
-      return state
+type Action = {
+  type: string
+  payload?: {
+    digit?: string
+    operation?: string
   }
 }
 
-// const reducer = (state, { type, payload }) => {}
-const Calculator = () => {
-  // const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(reducer, {})
+const ACTIONS = {
+  ADD_DIGIT: "add_digit",
+  CHOOSE_OPERATION: "choose-operation",
+  CLEAR: "clear",
+  DELETE_DIGIT: "delete-digit",
+  EVALUATE: "evaluate",
+} as const
 
-  const [state, dispatch] = useReducer(reducer, { count: 0 })
+function reducer(state: State, action: Action) {
+  const { type, payload } = action
+  switch (type) {
+    case ACTIONS.ADD_DIGIT:
+      // for overwriting current operand
+      if (payload) {
+        if (state.overwrite) {
+          return { ...state, currentOperand: payload.digit, overwrite: false }
+        }
+        // dont add multiple zeros in the beginning
+        if (payload.digit === "0" && state.currentOperand === "0") return state
+        // only one decimal allowed
+        if (payload.digit === "." && state.currentOperand && state.currentOperand.includes("."))
+          return state
+        // making current operation by iteration of current and digit
+        return { ...state, currentOperand: `${state.currentOperand || ""}${payload.digit}` }
+      }
+      break
+    case ACTIONS.CHOOSE_OPERATION:
+      // this if is for if the user doesnt start with a number we dont allow him to choose an operation
+      if (state.currentOperand === null && state.previousOperand === null) return state
+      // setting current operation to previous operation
+      if (state.previousOperand === null) {
+        return {
+          ...state,
+          operation: payload.operation,
+          previousOperand: state.currentOperand,
+          currentOperand: null,
+        }
+      }
+      // for changing current operation to new operation while keeping currentOperand
+      if (state.currentOperand === null) {
+        return {
+          ...state,
+          operation: payload.operation,
+        }
+      }
+      // for calculation without equal sign
+      return {
+        ...state,
+        previousOperand: evaluate(state),
+        operation: payload.operation,
+        currentOperand: null,
+      }
+    case ACTIONS.DELETE_DIGIT:
+      if (state.overwrite) {
+        // to delete everthing
+        return { ...state, currentOperand: null, overwrite: false }
+      }
+      if (state.currentOperand === null) return state
+      if (state.currentOperand.length === 1)
+        return {
+          ...state,
+          currentOperand: null,
+        }
+      // to empty
+      return {
+        ...state,
+        currentOperand: state.currentOperand.slice(0, -1),
+      }
+    case ACTIONS.CLEAR:
+      return {}
+    case ACTIONS.EVALUATE:
+      if (
+        state.currentOperand === null ||
+        state.previousOperand === null ||
+        state.operation === null
+      )
+        return state
+      // for calculation of = sign and setting overwrite to true
+      return {
+        ...state,
+        overwrite: true,
+        previousOperand: null,
+        operation: null,
+        currentOperand: evaluate(state),
+      }
+  }
+}
+
+function evaluate({ currentOperand, operation, previousOperand }) {
+  const prev = parseFloat(previousOperand)
+  const current = parseFloat(currentOperand)
+  if (isNaN(prev) || isNaN(current)) return ""
+  let computation = ""
+  switch (operation) {
+    case "+":
+      computation = prev + current
+      break
+    case "-":
+      computation = prev - current
+      break
+    case "*":
+      computation = prev * current
+      break
+    case "/":
+      computation = prev / current
+      break
+  }
+  return computation.toString()
+}
+
+const initialState = {
+  currentOperand: null,
+  previousOperand: null,
+  operation: null,
+}
+
+// for formatting the digits while making sure we dont format decimal one
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 0,
+})
+
+function formatOperand(operand) {
+  if (operand === null) return
+  const [integer, decimal] = operand.split(".")
+  if (decimal === undefined) return INTEGER_FORMATTER.format(integer)
+  else return operand
+}
+
+const Calculator = () => {
+  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
+    reducer,
+    initialState
+  )
+  console.log({ currentOperand, operation, previousOperand })
   return (
     <main className="flex flex-col items-center">
       <h1>Calculator</h1>
-      <button onClick={() => dispatch({ type: ACTIONS.INCREMENT })}>+</button>
-      <button onClick={() => dispatch({ type: ACTIONS.DECREMENT })}>-</button>
-      <button onClick={() => dispatch({ type: ACTIONS.RESET })}>clear</button>
-      {state.count}
-      <section className="bg-slate-300 w-96 h-96">
-        {/* <div className="w">
-          {previousOperand} {operation}
-        </div>
-        <div className=""> {currentOperand}</div> */}
-        <div>1</div>
-        <div>2</div>
+      <section className="bg-slate-300 ">
+        {operation ? (
+          <div className="w">
+            {formatOperand(previousOperand)} {operation}
+          </div>
+        ) : (
+          <br />
+        )}
+        {currentOperand ? <div className="w">{formatOperand(currentOperand)}</div> : <br />}
+        <button onClick={() => dispatch({ type: ACTIONS.CLEAR })}>Clear</button>
+        <DigitButton dispatch={dispatch} digit="1" />
+        <DigitButton dispatch={dispatch} digit="2" />
+        <DigitButton dispatch={dispatch} digit="3" />
+        <DigitButton dispatch={dispatch} digit="4" />
+        <DigitButton dispatch={dispatch} digit="5" />
+        <DigitButton dispatch={dispatch} digit="6" />
+        <DigitButton dispatch={dispatch} digit="7" />
+        <DigitButton dispatch={dispatch} digit="8" />
+        <DigitButton dispatch={dispatch} digit="9" />
+        <DigitButton dispatch={dispatch} digit="0" />
+        <DigitButton dispatch={dispatch} digit="." />
+        <OperationButton dispatch={dispatch} operation="+" />
+        <OperationButton dispatch={dispatch} operation="-" />
+        <OperationButton dispatch={dispatch} operation="*" />
+        <OperationButton dispatch={dispatch} operation="/" />
+        <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>Delete</button>
+        <button onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>=</button>
       </section>
     </main>
   )
 }
 export default Calculator
+
+const DigitButton = ({ dispatch, digit }) => {
+  return (
+    <button
+      className="bg-slate-200 p-2 rounded-lg"
+      onClick={() => dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit } })}>
+      {digit}
+    </button>
+  )
+}
+
+const OperationButton = ({ dispatch, operation }) => {
+  return (
+    <button onClick={() => dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: { operation } })}>
+      {operation}
+    </button>
+  )
+}
