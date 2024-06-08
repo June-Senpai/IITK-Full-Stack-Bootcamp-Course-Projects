@@ -1,0 +1,20 @@
+.sun {
+}
+
+.moon {
+  animation: eclipse 10s linear infinite;
+  transform: rotate(-60deg);
+  transform-origin: 50% 150%;
+}
+
+@keyframes eclipse {
+  0% {
+    transform: rotate(-60deg);
+  }
+  90% {
+    transform: rotate(40deg);
+  }
+  100% {
+    transform: rotate(300deg);
+  }
+}

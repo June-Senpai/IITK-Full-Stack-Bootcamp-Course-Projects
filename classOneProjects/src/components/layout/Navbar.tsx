@@ -7,7 +7,7 @@ const navLinks = [
   { name: "Weather", to: "/weather" },
   { name: "Todo", to: "/todo" },
   { name: "HTML", to: "/html" },
-  { name: "Css", to: "/css" },
+  { name: "CSS", to: "/css" },
 ]
 
 const Navbar = () => {

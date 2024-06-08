@@ -38,8 +38,8 @@ export default function App() {
           <Route path="table" element={<Table />} />
         </Route>
         <Route path="/css" element={<CssNavbar />}>
-          <Route index element={<Navigate to="lunarEslipse" />} />
-          <Route path="lunarEslipse" element={<LunarEclipse />} />
+          <Route index element={<Navigate to="lunarEclipse" />} />
+          <Route path="lunarEclipse" element={<LunarEclipse />} />
         </Route>
       </Routes>
     </main>

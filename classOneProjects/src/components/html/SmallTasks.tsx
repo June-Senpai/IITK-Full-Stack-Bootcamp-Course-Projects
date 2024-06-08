@@ -55,6 +55,30 @@ const SmallTasks = () => {
         <dt>Definition</dt>
         <dd>A definition list is a list of terms and their associated definitions.</dd>
       </dl>
+      <h2>Image usemap and map</h2>
+      <p>
+        it is like a {"<"}a{">"} tag wrapping image <br />
+        to use usemap you need to add a map tag to the image tag and add the area tag inside the map
+        tag <br />
+        the area tag has the shape of the image and the coords of the image <br />
+      </p>
+      <img
+        src="https://picsum.photos/200/300"
+        alt="A random image"
+        useMap="#myMap"
+        width={200}
+        height={300}
+      />
+      <map name="myMap">
+        <area
+          shape="rect"
+          coords="0,0,100,100"
+          href="https://picsum.photos/200/300"
+          alt="A random image"
+        />
+        <area shape="rect" coords="34,44,270,350" alt="Computer" href="/css/lunarEclipse" />
+      </map>
+      so if u click way below u go to lunar Eclipse and if top then u go to new image
     </main>
   )
 }

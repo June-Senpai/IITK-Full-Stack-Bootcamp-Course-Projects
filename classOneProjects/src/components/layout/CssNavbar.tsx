@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom"
 
-const htmlLinks = [{ name: "Lunar Eslipse", to: "/css/lunarEslipse" }]
+const htmlLinks = [{ name: "Lunar Eclipse", to: "/css/lunarEclipse" }]
 
 const CssNavbar = () => {
   return (
@@ -11,7 +11,7 @@ const CssNavbar = () => {
             <li key={link.name}>
               <NavLink
                 className={({ isActive }) => {
-                  return isActive ? "bg-orange-500 text-white p-2 rounded-lg" : ""
+                  return isActive ? "bg-blue-500 text-white p-2 rounded-lg" : ""
                 }}
                 to={link.to}>
                 {link.name}
