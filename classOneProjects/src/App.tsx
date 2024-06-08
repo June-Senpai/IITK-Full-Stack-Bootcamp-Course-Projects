@@ -15,6 +15,7 @@ import SmallTasks from "./components/html/SmallTasks"
 import FullForm from "./components/html/FullForm"
 import CssNavbar from "./components/layout/CssNavbar"
 import LunarEclipse from "./components/css/LunarEclipse"
+import Attributes from "./components/css/Attributes"
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
         <Route path="/css" element={<CssNavbar />}>
           <Route index element={<Navigate to="lunarEclipse" />} />
           <Route path="lunarEclipse" element={<LunarEclipse />} />
+          <Route path="attributes" element={<Attributes />} />
         </Route>
       </Routes>
     </main>

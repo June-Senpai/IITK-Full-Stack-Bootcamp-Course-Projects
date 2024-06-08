@@ -1,6 +1,9 @@
 import { NavLink, Outlet } from "react-router-dom"
 
-const htmlLinks = [{ name: "Lunar Eclipse", to: "/css/lunarEclipse" }]
+const htmlLinks = [
+  { name: "Lunar Eclipse", to: "/css/lunarEclipse" },
+  { name: "Attributes", to: "/css/attributes" },
+]
 
 const CssNavbar = () => {
   return (
