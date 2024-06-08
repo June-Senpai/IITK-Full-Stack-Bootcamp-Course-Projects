@@ -1,10 +1,10 @@
-import { useReducer } from "react"
+import { Reducer, useReducer } from "react"
 
 type State = {
   currentOperand: string | null
   previousOperand: string | null
   operation: string | null
-  overwrite?: boolean
+  overwrite?: boolean | undefined
 }
 
 type Action = {
@@ -23,13 +23,13 @@ const ACTIONS = {
   EVALUATE: "evaluate",
 } as const
 
-function reducer(state: State, action: Action) {
+function reducer(state: State, action: Action): State {
   const { type, payload } = action
   switch (type) {
     case ACTIONS.ADD_DIGIT:
       // for overwriting current operand
       if (payload) {
-        if (state.overwrite) {
+        if (state.overwrite && payload && payload.digit) {
           return { ...state, currentOperand: payload.digit, overwrite: false }
         }
         // dont add multiple zeros in the beginning
@@ -40,33 +40,36 @@ function reducer(state: State, action: Action) {
         // making current operation by iteration of current and digit
         return { ...state, currentOperand: `${state.currentOperand || ""}${payload.digit}` }
       }
-      break
+      return state
     case ACTIONS.CHOOSE_OPERATION:
-      // this if is for if the user doesnt start with a number we dont allow him to choose an operation
-      if (state.currentOperand === null && state.previousOperand === null) return state
-      // setting current operation to previous operation
-      if (state.previousOperand === null) {
+      if (payload && payload.operation) {
+        // this if is for if the user doesnt start with a number we dont allow him to choose an operation
+        if (state.currentOperand === null && state.previousOperand === null) return state
+        // setting current operation to previous operation
+        if (state.previousOperand === null) {
+          return {
+            ...state,
+            operation: payload.operation,
+            previousOperand: state.currentOperand,
+            currentOperand: null,
+          }
+        }
+        // for changing current operation to new operation while keeping currentOperand
+        if (state.currentOperand === null) {
+          return {
+            ...state,
+            operation: payload.operation,
+          }
+        }
+        // for calculation without equal sign
         return {
           ...state,
+          previousOperand: evaluate(state),
           operation: payload.operation,
-          previousOperand: state.currentOperand,
           currentOperand: null,
         }
       }
-      // for changing current operation to new operation while keeping currentOperand
-      if (state.currentOperand === null) {
-        return {
-          ...state,
-          operation: payload.operation,
-        }
-      }
-      // for calculation without equal sign
-      return {
-        ...state,
-        previousOperand: evaluate(state),
-        operation: payload.operation,
-        currentOperand: null,
-      }
+      return state
     case ACTIONS.DELETE_DIGIT:
       if (state.overwrite) {
         // to delete everthing
@@ -84,7 +87,7 @@ function reducer(state: State, action: Action) {
         currentOperand: state.currentOperand.slice(0, -1),
       }
     case ACTIONS.CLEAR:
-      return {}
+      return { currentOperand: null, previousOperand: null, operation: null }
     case ACTIONS.EVALUATE:
       if (
         state.currentOperand === null ||
@@ -100,14 +103,16 @@ function reducer(state: State, action: Action) {
         operation: null,
         currentOperand: evaluate(state),
       }
+    default:
+      return state
   }
 }
 
-function evaluate({ currentOperand, operation, previousOperand }) {
-  const prev = parseFloat(previousOperand)
-  const current = parseFloat(currentOperand)
+function evaluate({ currentOperand, operation, previousOperand }: State) {
+  const prev = parseFloat(previousOperand || "")
+  const current = parseFloat(currentOperand || "")
   if (isNaN(prev) || isNaN(current)) return ""
-  let computation = ""
+  let computation = 0
   switch (operation) {
     case "+":
       computation = prev + current
@@ -125,29 +130,28 @@ function evaluate({ currentOperand, operation, previousOperand }) {
   return computation.toString()
 }
 
+// for formatting the digits while making sure we dont format decimal one
+const INTEGER_FORMATTER = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 0,
+})
+
+function formatOperand(operand: string | null) {
+  if (operand === null) return
+  const [integer, decimal] = operand.split(".")
+  if (decimal === undefined) return INTEGER_FORMATTER.format(Number(integer))
+  else return operand
+}
+
 const initialState = {
   currentOperand: null,
   previousOperand: null,
   operation: null,
 }
 
-// for formatting the digits while making sure we dont format decimal one
-const INTEGER_FORMATTER = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 0,
-})
-
-function formatOperand(operand) {
-  if (operand === null) return
-  const [integer, decimal] = operand.split(".")
-  if (decimal === undefined) return INTEGER_FORMATTER.format(integer)
-  else return operand
-}
-
 const Calculator = () => {
-  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
-    reducer,
-    initialState
-  )
+  const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer<
+    Reducer<State, Action>
+  >(reducer, initialState)
   console.log({ currentOperand, operation, previousOperand })
   return (
     <main className="flex flex-col items-center">
@@ -185,7 +189,7 @@ const Calculator = () => {
 }
 export default Calculator
 
-const DigitButton = ({ dispatch, digit }) => {
+const DigitButton = ({ dispatch, digit }: { dispatch: React.Dispatch<Action>; digit: string }) => {
   return (
     <button
       className="bg-slate-200 p-2 rounded-lg"
@@ -195,7 +199,13 @@ const DigitButton = ({ dispatch, digit }) => {
   )
 }
 
-const OperationButton = ({ dispatch, operation }) => {
+const OperationButton = ({
+  dispatch,
+  operation,
+}: {
+  dispatch: React.Dispatch<Action>
+  operation: string
+}) => {
   return (
     <button onClick={() => dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: { operation } })}>
       {operation}
