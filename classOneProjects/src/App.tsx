@@ -16,6 +16,7 @@ import FullForm from "./components/html/FullForm"
 import CssNavbar from "./components/layout/CssNavbar"
 import LunarEclipse from "./components/css/LunarEclipse"
 import Attributes from "./components/css/Attributes"
+import Weather from "./components/Weather"
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/" element={<Hello />} />
         <Route path="/Clock" element={<DigitalClock />} />
         <Route path="/Calculator" element={<Calculator />} />
+        <Route path="/Weather" element={<Weather />} />
         <Route path="/Todo" element={<Todo />} />
         <Route path="/html" element={<HtmlNavbar />}>
           <Route index element={<Navigate to="form/loginForm" />} />
