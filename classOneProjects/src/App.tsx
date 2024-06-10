@@ -17,6 +17,7 @@ import CssNavbar from "./components/layout/CssNavbar"
 import LunarEclipse from "./components/css/LunarEclipse"
 import Attributes from "./components/css/Attributes"
 import Weather from "./components/Weather"
+import SurveyForm from "./components/html/SurveyForm"
 
 export default function App() {
   return (
@@ -28,18 +29,7 @@ export default function App() {
         <Route path="/Calculator" element={<Calculator />} />
         <Route path="/Weather" element={<Weather />} />
         <Route path="/Todo" element={<Todo />} />
-        <Route path="/html" element={<HtmlNavbar />}>
-          <Route index element={<Navigate to="form/loginForm" />} />
-          <Route path="form" element={<NavbarForm />}>
-            <Route index element={<Navigate to="loginForm" />} />
-            <Route path="loginForm" element={<LoginForm />} />
-            <Route path="signUpForm" element={<SignUpForm />} />
-            <Route path="socialMediaForm" element={<SocialMediaForm />} />
-            <Route path="fullForm" element={<FullForm />} />
-          </Route>
-          <Route path="smallTasks" element={<SmallTasks />} />
-          <Route path="table" element={<Table />} />
-        </Route>
+        <Route path="/html/*" element={<HtmlRoutes />} />
         <Route path="/css" element={<CssNavbar />}>
           <Route index element={<Navigate to="lunarEclipse" />} />
           <Route path="lunarEclipse" element={<LunarEclipse />} />
@@ -50,8 +40,23 @@ export default function App() {
   )
 }
 
-{
-  /* <Route path="signUpForm" element={<SignUpForm />} />
-<Route path="socialMediaForm" element={<SocialMediaForm />} />
-<Route path="loginForm" element={<LoginForm />} /> */
+const HtmlRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<HtmlNavbar />}>
+        <Route index element={<Navigate to="form/loginForm" />} />
+        <Route path="smallTasks" element={<SmallTasks />} />
+        <Route path="table" element={<Table />} />
+        {/* forms */}
+        <Route path="form" element={<NavbarForm />}>
+          <Route index element={<Navigate to="loginForm" />} />
+          <Route path="loginForm" element={<LoginForm />} />
+          <Route path="signUpForm" element={<SignUpForm />} />
+          <Route path="socialMediaForm" element={<SocialMediaForm />} />
+          <Route path="fullForm" element={<FullForm />} />
+          <Route path="surveyForm" element={<SurveyForm />} />
+        </Route>
+      </Route>
+    </Routes>
+  )
 }
