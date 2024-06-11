@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import getFetch from "../lib/fetch"
-import { debounce } from "../util/debounce"
+import { useDebounce } from "../hooks/Debounce"
 
 interface WeatherData {
   list: {
@@ -13,20 +13,13 @@ interface WeatherData {
 const Weather = () => {
   const [data, setData] = useState<WeatherData | null>(null)
   const [location, setLocation] = useState("delhi")
-  const [searchTerm, setSearchTerm] = useState(location) // Immediate update state
-
-  // useRef to store the debounced function
-  const debouncedSetLocation = useRef(
-    debounce((newLocation: string) => {
-      setLocation(newLocation)
-    }, 500)
-  ).current
+  const debounce = useDebounce(location)
 
   useEffect(() => {
     const handleSearch = async () => {
       const url = `https://api.openweathermap.org/data/2.5/forecast`
       const params = {
-        q: location,
+        q: debounce,
         appid: import.meta.env.VITE_WEATHER_API,
       }
       const resData = await getFetch({ url, params })
@@ -34,18 +27,16 @@ const Weather = () => {
       setData(resData)
     }
     handleSearch()
-  }, [location])
+  }, [debounce])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newLocation = e.target.value
-    setSearchTerm(newLocation) // Immediate update for input
-    debouncedSetLocation(newLocation) // Debounced update for location state
+    setLocation(e.target.value)
   }
 
   return (
     <div>
       <h1>Weather</h1>
-      <input type="text" value={searchTerm} onChange={handleChange} />
+      <input type="text" value={location} onChange={handleChange} />
       {data && (
         <div>
           <h2>Current Conditions</h2>
