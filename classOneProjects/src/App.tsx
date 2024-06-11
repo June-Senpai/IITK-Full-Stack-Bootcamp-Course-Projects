@@ -18,6 +18,7 @@ import LunarEclipse from "./components/css/LunarEclipse"
 import Attributes from "./components/css/Attributes"
 import Weather from "./components/Weather"
 import SurveyForm from "./components/html/SurveyForm"
+import LandingPage from "./components/css/LandingPage/LandingPage"
 
 export default function App() {
   return (
@@ -34,6 +35,7 @@ export default function App() {
           <Route index element={<Navigate to="lunarEclipse" />} />
           <Route path="lunarEclipse" element={<LunarEclipse />} />
           <Route path="attributes" element={<Attributes />} />
+          <Route path="landingPage" element={<LandingPage />} />
         </Route>
       </Routes>
     </main>

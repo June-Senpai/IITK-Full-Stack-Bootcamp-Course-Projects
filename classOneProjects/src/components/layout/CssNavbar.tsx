@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom"
 const htmlLinks = [
   { name: "Lunar Eclipse", to: "/css/lunarEclipse" },
   { name: "Attributes", to: "/css/attributes" },
+  { name: "Landing Page", to: "/css/landingPage" },
 ]
 
 const CssNavbar = () => {
