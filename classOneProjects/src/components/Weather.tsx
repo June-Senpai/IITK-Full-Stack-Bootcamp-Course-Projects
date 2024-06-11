@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import getFetch from "../lib/fetch"
+import { debounce } from "../util/debounce"
 
 interface WeatherData {
   list: {
@@ -12,6 +13,14 @@ interface WeatherData {
 const Weather = () => {
   const [data, setData] = useState<WeatherData | null>(null)
   const [location, setLocation] = useState("delhi")
+  const [searchTerm, setSearchTerm] = useState(location) // Immediate update state
+
+  // useRef to store the debounced function
+  const debouncedSetLocation = useRef(
+    debounce((newLocation: string) => {
+      setLocation(newLocation)
+    }, 500)
+  ).current
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -27,10 +36,16 @@ const Weather = () => {
     handleSearch()
   }, [location])
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newLocation = e.target.value
+    setSearchTerm(newLocation) // Immediate update for input
+    debouncedSetLocation(newLocation) // Debounced update for location state
+  }
+
   return (
     <div>
       <h1>Weather</h1>
-      <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
+      <input type="text" value={searchTerm} onChange={handleChange} />
       {data && (
         <div>
           <h2>Current Conditions</h2>
