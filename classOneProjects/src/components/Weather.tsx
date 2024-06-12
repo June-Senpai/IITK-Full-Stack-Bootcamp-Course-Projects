@@ -18,7 +18,14 @@ const Weather = () => {
   )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchParams({ q: e.target.value })
+    setSearchParams(
+      (prev) => {
+        const newParams = new URLSearchParams(prev.toString())
+        newParams.set("q", e.target.value)
+        return newParams
+      },
+      { replace: true }
+    )
   }
 
   return (
