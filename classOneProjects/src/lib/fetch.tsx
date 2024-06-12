@@ -1,17 +1,24 @@
+import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
 async function getFetch({ url, params }: { url: string; params: Record<string, unknown> }) {
-  try {
-    const { data } = await axios({
-      url: url,
-      method: "get",
-      params: params,
-    })
-    return data
-  } catch (error) {
-    console.error("Error fetching data:", error)
-    return null
-  }
+  const { data } = await axios({
+    url: url,
+    method: "get",
+    params: params,
+  })
+  return data
 }
 
-export default getFetch
+export const useFetch = (
+  queryKey: string,
+  url: string,
+  params: Record<string, unknown>,
+  staleTime: number = Infinity
+) => {
+  return useQuery({
+    queryKey: [queryKey, params],
+    queryFn: () => getFetch({ url, params }),
+    staleTime: staleTime,
+  })
+}
