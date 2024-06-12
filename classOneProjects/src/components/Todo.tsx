@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react"
+import { useEffect, useReducer, useState } from "react"
 
 interface Todo {
   id: number
@@ -13,6 +13,7 @@ type Action =
   | { type: "edit-todo"; payload: { index: number; newName: string } }
   | { type: "toggle-todo"; payload: { id: number } }
   | { type: "set-editing"; payload: { index: number; editing: boolean } }
+  | { type: "set-todo-list"; payload: Todo[] }
 
 const ACTIONS = {
   ADD_TODO: "add-todo",
@@ -20,31 +21,49 @@ const ACTIONS = {
   EDIT_TODO: "edit-todo",
   TOGGLE_TODO: "toggle-todo",
   SET_EDITING: "set-editing",
+  SET_TODO_LIST: "set-todo-list",
 } as const
 
 const reducer = (todoList: Todo[], action: Action): Todo[] => {
   switch (action.type) {
-    case ACTIONS.ADD_TODO:
-      return [...todoList, todoValues(action.payload)]
-    case ACTIONS.DELETE_TODO:
-      return todoList.filter((_, index) => index !== action.payload)
-    case ACTIONS.TOGGLE_TODO:
-      return todoList.map((todo) => {
+    case ACTIONS.ADD_TODO: {
+      const newTodoAdded = [...todoList, todoValues(action.payload)]
+      localStorage.setItem("todoList", JSON.stringify(newTodoAdded))
+      return newTodoAdded
+    }
+    case ACTIONS.DELETE_TODO: {
+      const todoToDelete = todoList.filter((_, index) => index !== action.payload)
+      localStorage.setItem("todoList", JSON.stringify(todoToDelete))
+      return todoToDelete
+    }
+    case ACTIONS.TOGGLE_TODO: {
+      const todoToToggle = todoList.map((todo) => {
         if (todo.id === action.payload.id) {
           return { ...todo, completed: !todo.completed }
         }
         return todo
       })
-    case ACTIONS.EDIT_TODO:
-      return todoList.map((todo, index) =>
+      localStorage.setItem("todoList", JSON.stringify(todoToToggle))
+      return todoToToggle
+    }
+    case ACTIONS.EDIT_TODO: {
+      const todoToEdit = todoList.map((todo, index) =>
         index === action.payload.index
           ? { ...todo, name: action.payload.newName, editing: false }
           : todo
       )
-    case ACTIONS.SET_EDITING:
-      return todoList.map((todo, index) =>
+      localStorage.setItem("todoList", JSON.stringify(todoToEdit))
+      return todoToEdit
+    }
+    case ACTIONS.SET_EDITING: {
+      const todoToSetEditing = todoList.map((todo, index) =>
         index === action.payload.index ? { ...todo, editing: action.payload.editing } : todo
       )
+      localStorage.setItem("todoList", JSON.stringify(todoToSetEditing))
+      return todoToSetEditing
+    }
+    case ACTIONS.SET_TODO_LIST:
+      return action.payload
     default:
       return todoList
   }
@@ -74,6 +93,11 @@ const Todo = () => {
     const newName = (e.currentTarget.elements.namedItem("editInput") as HTMLInputElement).value
     dispatch({ type: ACTIONS.EDIT_TODO, payload: { index, newName } })
   }
+
+  useEffect(() => {
+    const storedTodoList = JSON.parse(localStorage.getItem("todoList") || "[]")
+    dispatch({ type: ACTIONS.SET_TODO_LIST, payload: storedTodoList })
+  }, [])
 
   return (
     <main className="flex flex-col items-center gap-4 text-2xl">
