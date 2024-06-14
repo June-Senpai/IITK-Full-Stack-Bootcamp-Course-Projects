@@ -236,19 +236,6 @@ nav ul {
   }
 }
 
-.card-section {
-  /* background-color: var(--color-secondary); */
-  padding: 5%;
-}
-
-.card-section ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 20px;
-}
-
 /* BELOW IS THE SHIT WHICH I WROTE WHICH THE CSS TAKES IT DIFFERENT 
 problem 1 u need to change the background of the body in order for this ::after before to work y because 
 the z index of the body is always behind the card while if i give color to the section it will be on top of the ::after before and zindex doesnt work for section apparently 
@@ -281,17 +268,11 @@ problem 2 BACKGROUND IMAGE is like a background for the whole okay weird if u pu
   } */
 /* background-image: linear-gradient(to top left, #55265a, #e605ff); */
 
-.mask-image {
-  position: absolute;
-  left: -90px;
-}
-
-.card {
+/* moving card css */
+/* .card {
   width: 300px;
   height: 323px;
   aspect-ratio: 1 / 1.5;
-  /* background: var(--clr-1); */
-  /* background-image: linear-gradient(to top left, #e66adb1a, #3215671a); */
   background-image: linear-gradient(to top left, #e66adb, #321567);
   border-radius: 0.5rem;
   position: relative;
@@ -307,9 +288,9 @@ problem 2 BACKGROUND IMAGE is like a background for the whole okay weird if u pu
   background: conic-gradient(
     from var(--gradient-angle),
     #7724ff,
-    /* #faeeff, */ #fd61ff,
+    #faeeff, #fd61ff,
     #f76ae0,
-    /* #e7adff, */ #4a2290
+    #e7adff, #4a2290
   );
   border-radius: inherit;
   animation: rotation 5s linear infinite;
@@ -331,4 +312,62 @@ problem 2 BACKGROUND IMAGE is like a background for the whole okay weird if u pu
   100% {
     --gradient-angle: 360deg;
   }
+} */
+
+.card-section {
+  /* background-color: var(--color-secondary); */
+  padding: 5%;
+}
+
+.card-section ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 40px;
+}
+
+.card {
+  list-style: none;
+  width: 450px;
+  height: 571px;
+  background-image: url("public/CARD.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.card h2 {
+  font-size: 3.125rem;
+  padding: 30px 30px;
+  font-family: inter;
+  font-weight: 500;
+}
+
+.card p {
+  font-size: 1.25rem;
+  padding: 0 30px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #d8d8d8;
+}
+
+.card button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  align-self: flex-end;
+  padding: 150px 50px 10px 0px;
+  cursor: pointer;
+}
+
+.card img {
+  position: absolute;
+  bottom: 56px;
+  left: 7px;
 }
