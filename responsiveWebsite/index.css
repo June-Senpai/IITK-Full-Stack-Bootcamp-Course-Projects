@@ -1,0 +1,334 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Kapakana Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Kapakana Regular"), url("./fonts/Kapakana[wght].woff") format("woff");
+}
+
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+:root {
+  --color-primary: #1a111b;
+  --color-secondary: #241826;
+  --color-text: #fff;
+}
+
+body {
+  /* background-color: var(--color-primary); */
+  background-color: var(--color-secondary);
+  color: var(--color-text);
+}
+
+h1 {
+  font-size: clamp(3.5rem, 12vw, 16.688rem);
+  font-weight: 900;
+  font-family: inter;
+  line-height: 1;
+}
+
+h3 {
+  font-size: clamp(3.25rem, 9vw, 7.625rem);
+  font-family: "Kapakana Regular", sans-serif;
+  font-weight: 300;
+}
+
+p {
+  font-size: 1.125rem;
+}
+
+header {
+  background-color: var(--color-primary);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2% 8% 0 8%;
+  font-size: 2rem;
+  font-family: inter;
+  font-weight: 900;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  font-size: 1.375rem;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+  font-weight: 500;
+}
+
+.hamburger {
+  display: none;
+}
+
+.active {
+  font-weight: 700;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 95vh;
+  height: 95dvh;
+  position: relative;
+  background-color: var(--color-primary);
+}
+
+.fragrance {
+  font-size: clamp(10rem, 15vw, 25rem);
+  position: absolute;
+  z-index: -100;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #241826;
+  line-height: 1.1;
+  /* border: 2px solid #241826; */
+}
+
+.hero-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-top: 8%;
+}
+
+.hero h1 {
+  text-align: center;
+}
+
+.hero img {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.hero h3 {
+  position: absolute;
+  top: 140%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  white-space: nowrap;
+}
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  margin: 5%;
+  align-items: center;
+}
+
+.hero-bottom p:last-of-type {
+  text-align: end;
+}
+
+.hero-bottom button {
+  border: 5px solid var(--color-text);
+  background-color: transparent;
+  color: var(--color-text);
+  font-size: 3rem;
+  font-weight: 700;
+  font-family: inter;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 27px 33px;
+}
+
+.hero-bottom button:hover {
+  background-color: var(--color-text);
+  color: var(--color-primary);
+}
+
+@media (min-width: 1600px) {
+  .hero img {
+    width: 300px;
+    height: 400px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    height: 110vh;
+    height: 110dvh;
+  }
+  .fragrance {
+    line-height: 1.8;
+  }
+}
+
+@media (max-width: 1080px) {
+  .hero img {
+    width: 250px;
+    height: 300px;
+  }
+
+  .hero-bottom {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .hero h3 {
+    top: 220px;
+  }
+}
+
+@media (max-width: 650px) {
+  nav ul {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-primary);
+    border-radius: 50%;
+    z-index: 100;
+    margin: 10px;
+  }
+
+  .hamburger .line {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text);
+    margin: 5px 0;
+  }
+
+  .fragrance {
+    line-height: 1.4;
+  }
+
+  .hero {
+    height: 90vh;
+    height: 90dvh;
+  }
+
+  .hero-bottom button {
+    font-size: 2rem;
+    padding: 15px 20px;
+  }
+
+  .hero h3 {
+    top: 140px;
+  }
+
+  .hero img {
+    width: 150px;
+    height: 200px;
+  }
+}
+
+.card-section {
+  /* background-color: var(--color-secondary); */
+  padding: 5%;
+}
+
+.card-section ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 20px;
+}
+
+/* BELOW IS THE SHIT WHICH I WROTE WHICH THE CSS TAKES IT DIFFERENT 
+problem 1 u need to change the background of the body in order for this ::after before to work y because 
+the z index of the body is always behind the card while if i give color to the section it will be on top of the ::after before and zindex doesnt work for section apparently 
+
+problem 2 BACKGROUND IMAGE is like a background for the whole okay weird if u put rgba it wont work but if u put rgb it works LIKE WTF */
+
+/* .card {
+  width: 500px;
+  height: 623px;
+  background-image: linear-gradient(to top left, rgba(230, 106, 219, 0.1), rgba(50, 21, 103, 0.1));
+  border-radius: 10px;
+  margin: 10px;
+  list-style: none;
+  position: relative;
+  border-radius: 0.5rem;
+  z-index: 999;
+}
+/* opacity: 10%; */
+/* overflow: hidden; */
+
+/* 
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -1.5rem;
+  background-color: red;
+  z-index: -1;
+  border-radius: inherit;
+  } */
+/* background-image: linear-gradient(to top left, #55265a, #e605ff); */
+
+.mask-image {
+  position: absolute;
+  left: -90px;
+}
+
+.card {
+  width: 300px;
+  height: 323px;
+  aspect-ratio: 1 / 1.5;
+  /* background: var(--clr-1); */
+  /* background-image: linear-gradient(to top left, #e66adb1a, #3215671a); */
+  background-image: linear-gradient(to top left, #e66adb, #321567);
+  border-radius: 0.5rem;
+  position: relative;
+  list-style: none;
+}
+
+.card::before,
+.card::after {
+  content: "";
+  position: absolute;
+  inset: -0.5rem;
+  z-index: -1;
+  background: conic-gradient(
+    from var(--gradient-angle),
+    #7724ff,
+    /* #faeeff, */ #fd61ff,
+    #f76ae0,
+    /* #e7adff, */ #4a2290
+  );
+  border-radius: inherit;
+  animation: rotation 5s linear infinite;
+}
+
+.card::after {
+  filter: blur(3.5rem);
+}
+
+.card::after,
+.card::before:hover {
+  background-color: none;
+}
+
+@keyframes rotation {
+  0% {
+    --gradient-angle: 0deg;
+  }
+  100% {
+    --gradient-angle: 360deg;
+  }
+}
