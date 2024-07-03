@@ -19,6 +19,7 @@ import Attributes from "./components/css/Attributes"
 import Weather from "./components/Weather"
 import SurveyForm from "./components/html/SurveyForm"
 import LandingPage from "./components/css/LandingPage/LandingPage"
+import Display from "./components/css/display/Display"
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="lunarEclipse" element={<LunarEclipse />} />
           <Route path="attributes" element={<Attributes />} />
           <Route path="landingPage" element={<LandingPage />} />
+          <Route path="display" element={<Display />} />
         </Route>
         <Route path="*" element={<h1>where are u going?</h1>} />
       </Routes>

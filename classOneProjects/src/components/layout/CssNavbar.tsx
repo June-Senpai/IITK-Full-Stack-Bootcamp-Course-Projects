@@ -4,6 +4,7 @@ const htmlLinks = [
   { name: "Lunar Eclipse", to: "/css/lunarEclipse" },
   { name: "Attributes", to: "/css/attributes" },
   { name: "Landing Page", to: "/css/landingPage" },
+  { name: "Display", to: "/css/display" },
 ]
 
 const CssNavbar = () => {
