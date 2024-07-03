@@ -37,6 +37,7 @@ export default function App() {
           <Route path="attributes" element={<Attributes />} />
           <Route path="landingPage" element={<LandingPage />} />
         </Route>
+        <Route path="*" element={<h1>where are u going?</h1>} />
       </Routes>
     </main>
   )
