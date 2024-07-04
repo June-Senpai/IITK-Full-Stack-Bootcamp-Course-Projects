@@ -40,7 +40,7 @@ build a responsive website which has heading para images colors fonts margins po
 
 - [x] html-> forms,sign up form, login form, social media login,table list
 - [x] website layout
-- css-> display,layout(flex grid),semantic,box model
+- [x] css-> display,layout(flex grid),semantic,box model
 - bootstrap-demo website
 - jss-> temp. conversion,duplicates removal in an array without using any build in methods,
 - array methods 15-20 methods,string methods 15-20++,array iterations map,forEach,reduce
