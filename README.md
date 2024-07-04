@@ -41,20 +41,22 @@ build a responsive website which has heading para images colors fonts margins po
 - [x] html-> forms,sign up form, login form, social media login,table list
 - [x] website layout
 - [x] css-> display,layout(flex grid),semantic,box model
-- bootstrap-demo website
-- jss-> temp. conversion,duplicates removal in an array without using any build in methods,
-- array methods 15-20 methods,string methods 15-20++,array iterations map,forEach,reduce
-- ES6 features
-- ES6 and React -> nested Objects,Operators double and triple equal,logical operators,++,--,pre and post
-- class with different methods
-- Types of compos, events,props,Hooks
-- Routing
+- [x] bootstrap-demo website
+- [x] jss-> temp. conversion,duplicates removal in an array without using any build in methods,
+- [x] array methods 15-20 methods,string methods 15-20++,array iterations map,forEach,reduce
+- [x] ES6 features
+- [x] ES6 and React -> nested Objects,Operators double and triple equal,logical operators,++,--,pre and post
+- [x] class with different methods
+- [x] Types of compos, events,props,Hooks
+- [x] Routing
 
 ### Projects
 
-- Weather application
-- digital clock
-- calculator
+- [x] Weather application
+- [x] digital clock
+- [x] calculator
+
+---
 
 Forms
 login,sign up,tables,list,Box model,displaylayout

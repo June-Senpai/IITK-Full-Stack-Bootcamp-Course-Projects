@@ -1,0 +1,81 @@
+---
+import Layout from "../../layouts/Layout.astro"
+---
+
+<Layout title="array method">
+  <div class="flex items-center justify-center min-h-screen flex-col gap-5">
+    <h1>Array methods</h1>const fruits = ["Banana", "Orange", "Apple", "Mango"]
+    <div>
+      <h2>The length Property</h2>
+      <p>The length property returns the length of an array: </p>
+      <p id="demo"></p>
+    </div>
+    <div>
+      <h2>The toString() Method</h2>
+      <p>The toString() method returns an array as a comma separated string:</p>
+      <p id="demo1"></p>
+    </div>
+    <div>
+      <h2>Bracket Notation</h2>
+      <p>The bracket notation [] returns an indexed element from an array:</p>
+      <p id="demo2"></p>
+    </div>
+    <div>
+      <h2>The join() Method</h2>
+      <p>The join() method joins array elements into a string.</p>
+      <p>It this example we have used " * " as a separator between the elements:</p>
+      <p id="demo3"></p>
+    </div>
+    <div>
+      <h2>The concat() Method</h2>
+      <p>The concat() method merges (concatenates) arrays:</p>
+      <p id="demo4"></p>
+    </div>
+    <div
+      ><h2>The copyWithin() Method</h2>
+      <p
+        >copyWithin() copies array elements to another position in an array, overwriting existing
+        values:</p
+      >
+      <p>Copy to index 2, all elements from index 0:</p>
+
+      <p id="demo5"></p>
+    </div>
+    <div
+      ><h2>The flat() Method</h2>
+
+      <p id="demo6"></p></div
+    >
+  </div>
+</Layout>
+<script>
+  const fruits = ["Banana", "Orange", "Apple", "Mango"]
+
+  let size = fruits.length
+  document.getElementById("demo").innerHTML = size
+
+  document.getElementById("demo1").innerHTML = fruits.toString()
+
+  let fruit = fruits[2]
+
+  document.getElementById("demo2").innerHTML = fruit
+
+  document.getElementById("demo3").innerHTML = fruits.join(" * ")
+
+  const myGirls = ["Cecilie", "Lone"]
+  const myBoys = ["Emil", "Tobias", "Linus"]
+  const myChildren = myGirls.concat(myBoys)
+
+  document.getElementById("demo4").innerHTML = myChildren
+
+  document.getElementById("demo5").innerHTML = fruits.copyWithin(2, 0)
+
+  const myArr = [
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ]
+
+  const newArr = myArr.flat()
+  document.getElementById("demo6").innerHTML = newArr
+</script>

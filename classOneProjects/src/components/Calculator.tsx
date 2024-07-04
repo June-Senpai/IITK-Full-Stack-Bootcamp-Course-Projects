@@ -32,7 +32,7 @@ function reducer(state: State, action: Action): State {
         if (state.overwrite && payload && payload.digit) {
           return { ...state, currentOperand: payload.digit, overwrite: false }
         }
-        // dont add multiple zeros in the beginning
+        // don't add multiple zeros in the beginning
         if (payload.digit === "0" && state.currentOperand === "0") return state
         // only one decimal allowed
         if (payload.digit === "." && state.currentOperand && state.currentOperand.includes("."))
@@ -43,7 +43,7 @@ function reducer(state: State, action: Action): State {
       return state
     case ACTIONS.CHOOSE_OPERATION:
       if (payload && payload.operation) {
-        // this if is for if the user doesnt start with a number we dont allow him to choose an operation
+        // this if is for if the user doesn't start with a number we dont allow him to choose an operation
         if (state.currentOperand === null && state.previousOperand === null) return state
         // setting current operation to previous operation
         if (state.previousOperand === null) {
@@ -72,7 +72,7 @@ function reducer(state: State, action: Action): State {
       return state
     case ACTIONS.DELETE_DIGIT:
       if (state.overwrite) {
-        // to delete everthing
+        // to delete everything
         return { ...state, currentOperand: null, overwrite: false }
       }
       if (state.currentOperand === null) return state
